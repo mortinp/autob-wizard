@@ -1,0 +1,21 @@
+PRE-DEFINED FILES
+-file svn-export.xml
+-file project_custom_build.xml
+-script file build-all
+
+CONFIGURATION
+-configure file svn.properties
+-configure file nbbuild.properies
+-configure file autob-config.properties
+-configure file build-export.properties for each projects
+-copy files build-all and autob-config.properties to cron folder and set build-all as executable
+
+AUTO-BUILD-GENERATION
+-execute svn export
+-copy files build-export.properties, nbbuild.properties and project_custom_build.xml to the root of each project (or should they be already in the svn repository???)
+-execute ant -build over each project_custom_build.xml file
+
+CONFIGURATIONS MAPPINGS
+-autobuild.env.path -> nbbuild.properties/autob-config.properties/build.properties
+-svn.export -> svn.properties/autob-config.properties
+

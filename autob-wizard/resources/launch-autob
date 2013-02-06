@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#prepare
+current_dir=$(pwd)
+script_dir=$(dirname "$0")
+if [ "$script_dir" = "." ]
+then
+script_dir="$current_dir"
+fi
+
+#load properties
+auto_build_env_path=`sed '/^\#/d' "$script_dir/conf/env-config.properties" | grep 'autobuild.env.path'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
+system_java_home_path=`sed '/^\#/d' "$script_dir/conf/env-config.properties" | grep 'system.java.home'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
+projects_names_desc=`sed '/^\#/d' "$script_dir/autob-config.properties" | grep 'projects.names'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
+projects_alias_desc=`sed '/^\#/d' "$script_dir/autob-config.properties" | grep 'projects.alias'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
+projects_path=`sed '/^\#/d' "$script_dir/svn/svn.properties" | grep 'svn.export.path'  | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
+
+#create projects arrays
+projects_names=(`echo $projects_names_desc | tr ';' ' '`)
+projects_alias=(`echo $projects_alias_desc | tr ';' ' '`)
+
+resources_path=${auto_build_env_path}/resources
+
+export ANT_HOME=${resources_path}/3p/ant
+export JAVA_HOME=${system_java_home_path}
+export PATH=${PATH}:${ANT_HOME}/bin:${JAVA_HOME}/bin
+
+ant_lib_extras=$resources_path/3p/ant/lib/extras
+
+ant -lib "${ant_lib_extras}" -buildfile "${resources_path}/svn/svn-export.xml"
+
+cant=${#projects_names[*]}
+i=0
+while [ $i -lt $cant ]; do
+        cp "${resources_path}/custom/${projects_alias[$i]}-build-export.properties" "${projects_path}/${projects_names[$i]}/build-export.properties"
+        cp "${resources_path}/custom/postgres.properties" "${projects_path}/${projects_names[$i]}/postgres.properties"
+        cp "${resources_path}/custom/nbbuild.properties" "${projects_path}/${projects_names[$i]}"
+        cp "${resources_path}/custom/project-custom-build.xml" "${projects_path}/${projects_names[$i]}"
+	ant -lib "${ant_lib_extras}" -buildfile "${projects_path}/${projects_names[$i]}/project-custom-build.xml"
+	let i++
+done
+

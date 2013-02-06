@@ -1,0 +1,5 @@
+La idea general de la aplicacion deberia ser establecer las configuraciones necesarias para la comunicacion de varios build files. Al final lo que se haria seria ejecutar un build file que funcione como main/master, que ejecutaria todo lo que este en estas configuraciones.
+
+Por tanto, la aplicacion se divide en dos: una parte realiza las configuraciones, y la otra parte ejecuta las ant tasks dependiendo de las configuraciones.
+
+Ver la aplicacion de esta forma nos permite poder hacer las configuraciones a mano primeramente, y probar la segunda parte incluso sin tener la primera, pues ambas partes son independientes. Lo que tengo que hacer por tanto es 

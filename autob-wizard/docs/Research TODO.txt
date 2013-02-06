@@ -1,0 +1,14 @@
+-how to execute java program (.jar) from command-line (how to set the classpath???). DONE (java -jar <our_jar>).
+-verify that netbeans installation in Linux is equal to Windows. Make sure that there is a <nd_install_folder>/etc/netbeans.conf file. DONE (yeah!!!).
+
+-fix the problem (in Windows) with the paths to files when the scripts are executed from the same drive. I use /d option in some places, but it seems to force the script interpreter to look in a different drive, even if it's in the same.
+-autobuild with Eclipse IDE (preferably with ANT).
+-look for a bash interpreter for Windows. This would be great to homogenize the project for multiple platforms.
+-how to use log4j.
+-how to create a windows/linux command utility???
+-how to store several batch scripts in one dll??? Can something similar to this be done in Linux???
+-How to pass parameters to a script
+-Cygwin, PowerShell
+
+OTHERS
+-How could I specify the resources directory layout in a configuration file (maybe XML)???... I need to be able to move resource files among various directories (trying better layouts) without having to touch the code...

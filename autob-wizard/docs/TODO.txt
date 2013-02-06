@@ -1,0 +1,92 @@
+---------------GENERAL------------------------
+-verify problem with ':' when saving properties. DONE(no problems...it works!!!)
+-find external resources!!!.DONE.
+
+-provide a better way to specify paths (i.e. path selection window).DONE (for local paths)
+
+-copy shortcut to cron directory (or ask the user where to put it???): cron is linux-specific. I think it's better to ask the user. DONE (asking the user where to put it).
+
+-detect OS and give support for each of them. IMPORTANT!!!.DONE (Windows and Unix-based).
+
+-find java home!!!.DONE.
+
+-put an icon to the link created (this can be done with xxmklink for Windows). DONE (for Windows only).
+
+-deal with space characters in paths (I think this should be done in the scripts!!!). DONE.
+
+-Distinguish between separators for properties in Linux (:) and Windows (;). DONE
+
+-when deploying the project, it would be useful to do it with certain layout. For example, we could save it in a folder with the name of the project with a time stamp (as we do it now), and inside this folder, we could make another one with the distribution of the application, another with the documentation (javadoc, test reports, etc), and others with other kind of artifacts we may be interested with.
+
+-arrange the wizard pages better!!!.
+
+-delete svn-export folder when the autobuild is finished (???).
+
+-fix the problem (in Windows) with the paths to files when the scripts are executed from the same drive. I use /d option in some places, but it seems to force the script interpreter to look in a different drive, even if it's in the same.
+
+-copy the built app to a local directory (as we do to a ftp). This could turn out to be more functional, since the user has the application more readily.
+
+-Put a progress bar at the end of the wizard.
+
+-validate data (mmm...it's a wizard anyway!!!)
+
+-encrypt passwords!!!
+
+-internationalization (with resource bundles)
+
+-create image for link icons
+
+-find desktop path(?)...i think I could do this with resource bundles!!!...
+
+-port scripts to bash using Cygwin!!!... but having Cygwin should not be a must for the user, so I have to install the needed Cygwin packages silently. Should I look for a bash interpreter for Windows???...
+
+
+-------------WIDOWS SUPPORT----------------------------
+-command to create link.DONE (with a 3p utility: ln for windows... but symbolic link does not work in winxp (DONE with xxmklink)).
+
+-replace '\\' for '/'.DONE.
+
+-install and test ant. DONE.
+
+-create scripts for windows.DONE.
+
+-------------BUGS-----------------------------
+-when I execute ant -buildfile in Windows, it seems to lose the reference to the current script, because it doesn't find the label ':sub'. IMPORTANT!!!. DONE (I had to put 'call' at the beginning of the command: call ant -buildfile [path]...)
+
+-Since Linux is case-sensitive, when we have a svn repo in Linux, we are allowed to commit files that in Windows would otherwise fail commiting. For instance, in Linux we could have the files Abc and aBC in the same directory, while this is forbidden in Windows. This could bring a bug into action when trying to export from svn repo to Windows, two files considered to be named equally in Windows but not in Linux; this makes subversion export fail. I need to find out a solution for this problem...override the files???...delete both???... how I could do this from an Ant build file (maybe with 'force' attribute)???...DONE (with the 'force' attribute)
+
+
+-------------------ENHANCEMENTS-----------------------------
+
+-provide support for user-specified ant build files. DONE (easy... importing build.xml instead of nbproject/build-impl.xml... I assume that build.xml is the user-specified ant build file)
+
+-find out the extra libraries that ant needs to execute svn and ftp tasks; pack them with the application. DONE (I now use a stand-alone version of ant... I added the libraries to it).
+
+-create a script to copy only the netbeans-specific libs referenced in build.properties. Ask the user if she has a local Netbeans copy and execute the script in case she has. DONE (I dont use a script, but java itself).
+
+-Create a daemon software. I need this to build my own 'complete' autobuild app. DONE (maybe needs improvements)
+
+-Put each autobuild task (svn export, build, DB backup, ftp send, etc) in separate ant build files, and write a master build file that calls all the others. This is better for not having to override the tasks defined by the users. These separated files may include: svn export, database backup (creation and data), building, testing, ftp sending, etc. This system would work as a template for the steps to carry out when building an application (Maven???).
+
+-Integrate dbdeploy into the process.
+
+-Creo que se podria establecer un 'export directory layout'. Esto indicaria la forma en que se distribuirian los proyectos por directorios al ser exportados desde el repositorio. Esto es importante, porque durante el desarrollo, se puede establecer un layout, que influye en la inter-dependencia de los proyectos. Si exportamos los proyectos para un directorio con un layout diferente al adoptado durante el desarrollo, entonces los proyectos no encuentran sus dependencias.
+
+-Cada uno de los pasos del autobuild deberian poderse configuar. Por ejemplo, para la exportacion se debe poder configurar la url del repo, usuario y pass, export directory layout, etc; del despliegue se podria configurar los destinos (ftp, http, local) y formas de acceso (user/pass), si se va a desplegar la documentacion, etc; de la construccion, se podria configurar los recursos necesarios (directorios de librerias externas, etc), los proyectos a construir, alias, etc.
+
+-I could use Jada to make a daemon for the autobuild. To run the daemon, a could create a script. Users could run the daemon by using some functionality as shortcuts on the desktop or on the 'All programs' menu in the Start Menu, which runs the execution script; just like all servers do!!!.
+NOTE: I think I'm approaching to a Continuous Integration Server!!!.
+
+-I was reading about project dependencies here: http://gradle.org/docs/current/userguide/userguide_single.html#artifact_dependencies_tutorial
+It calls a project dependency everything a project needs to build or run.
+This concept can be applied to the Netbeans dependencies I need to build a Netbeans project. I could treat these dependencies as a project dependencie, and ask the user to provide this dependencies, along with a 'dependencies configuration file', which in this case is the build.properties that comes with Netbeans IDE. This is great!!!.
+
+-Currently, when we execute the wizard, we delete all the previos configurations we had. This is not good. It would be better if we could do it incrementally. We should also be capable of managing multiple svn configurations, mutiple projects, etc. I think the wizard should become an application!!!
+
+-Improve svn export. Find out a way to export only the projects specified and its dependencies.
+
+-I was reading about hard links, symbolic links and junctions, and I think they would be very helpful for the case when netbeans is already installed in the machine. In this case, we don't need to have a copy of the netbeans' installation folder in our autobuild environment path, but we could have a hard/symbolic link or a junction in it, and refer to it in the same way we would do if we had a copy.
+
+-log results of autobuild execution. Use log4j (this is for learning something new). It would be better to format logs as html documents.
+
+-Can I use Lua as a configuration file for the projects???... I was thinking of using the capability of Lua for defining configuration files.

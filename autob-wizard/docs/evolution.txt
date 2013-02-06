@@ -1,0 +1,10 @@
+Evolve the Netbeans Autobuild Wizard to an application to manage the autobuild of many projects!!!. I could spread the functionality into the following configurations:
+
+-Manage Projects Home: here we could manage the places where the sources are located (i.e. Subversion/Mercurial repository, remote computer, etc)
+-Manage Autobuild Environment: here we would setup everything related to the autob environment: local export path, whether Netbeans is installed (or we could manage different developmnet platforms), script links path, building time interval, etc.
+-Manage Projects: this is to configure all aspects related to projects: names, aliases, etc.
+-Manage Deployment: this is to manage the deployment: deployment destination (ftp, remote pc), path to local deployment, etc.
+
+Users should be capable of managing projects incrementally. This means that when the application is run again, the user should see all the configurations done previously and start managing from that point.
+
+IDEAS: We should have classes (DAO-like classes) to acces data in configuration files. It would be good not to depend on any database server, so as long as configuration is not such a big deal, I should keep configuration in simple files.

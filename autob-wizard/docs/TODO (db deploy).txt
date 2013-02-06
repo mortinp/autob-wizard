@@ -1,0 +1,1 @@
+-Hacer que en el backup de la BD se guarden de forma separada la estructura y los datos.

@@ -1,0 +1,5 @@
+build/
+dist/
+export/
+nbconfig/
+resources/custom/*.properties

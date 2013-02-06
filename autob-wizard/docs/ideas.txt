@@ -1,0 +1,17 @@
+-To find the desktop path I could have resource bundles. I would set the following properties:
+
+#English configuration
+base.system.settings.path=Documents and Settings
+desktop.directory.name=Desktop
+
+#Spanish configuration
+base.system.settings.path=Documents and Settings
+desktop.directory.name=Escritorio
+
+Then, the path to the desktop would be:
+
+String desktopPath = getResourcePropertyValue("base.system.settings.path") + System.getProperty("user.name") + getResourcePropertyValue("desktop.directory.name");
+
+It could also be (better):
+
+String desktopPath = System.getProperty("user.home") + getResourcePropertyValue("desktop.directory.name");

@@ -1,0 +1,3 @@
+Welcome to the Netbeans Autobuild Wizard!
+This wizard will help you configure a custom environment for performing auto-build tasks for your Netbeans projects. During the configuration you will be prompted to enter data that you should be aware of. If not, contact someone who does. After finishing the wizard you can use the generated script to perform the tasks repetitively with the help of any automation software capable of running the script.
+Press the 'Next' button to continue...
